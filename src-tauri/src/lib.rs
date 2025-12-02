@@ -71,12 +71,37 @@ impl Default for AuthStatus {
 
 // App configuration
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct AppConfig {
     pub port: u16,
-    #[serde(rename = "autoStart")]
     pub auto_start: bool,
-    #[serde(rename = "launchAtLogin")]
     pub launch_at_login: bool,
+    #[serde(default)]
+    pub debug: bool,
+    #[serde(default)]
+    pub proxy_url: String,
+    #[serde(default)]
+    pub request_retry: u16,
+    #[serde(default)]
+    pub quota_switch_project: bool,
+    #[serde(default)]
+    pub quota_switch_preview_model: bool,
+    #[serde(default = "default_usage_stats_enabled")]
+    pub usage_stats_enabled: bool,
+    #[serde(default)]
+    pub request_logging: bool,
+    #[serde(default)]
+    pub logging_to_file: bool,
+    #[serde(default = "default_config_version")]
+    pub config_version: u8,
+}
+
+fn default_usage_stats_enabled() -> bool {
+    true
+}
+
+fn default_config_version() -> u8 {
+    1
 }
 
 impl Default for AppConfig {
@@ -85,9 +110,19 @@ impl Default for AppConfig {
             port: 8317,
             auto_start: true,
             launch_at_login: false,
+            debug: false,
+            proxy_url: String::new(),
+            request_retry: 0,
+            quota_switch_project: false,
+            quota_switch_preview_model: false,
+            usage_stats_enabled: true,
+            request_logging: false,
+            logging_to_file: false,
+            config_version: 1,
         }
     }
 }
+
 
 // OAuth state for tracking pending auth flows
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -317,6 +352,13 @@ async fn start_proxy(
     
     let proxy_config_path = config_dir.join("proxy-config.yaml");
     
+    // Build proxy-url line if configured
+    let proxy_url_line = if config.proxy_url.is_empty() {
+        String::new()
+    } else {
+        format!("proxy-url: \"{}\"\n", config.proxy_url)
+    };
+    
     // Always regenerate config on start because CLIProxyAPI hashes the secret-key in place
     // and we need the plaintext key for Management API access
     let proxy_config = format!(
@@ -325,8 +367,15 @@ port: {}
 auth-dir: "~/.cli-proxy-api"
 api-keys:
   - "proxypal-local"
-debug: true
-usage-statistics-enabled: true
+debug: {}
+usage-statistics-enabled: {}
+logging-to-file: {}
+request-retry: {}
+{}
+# Quota exceeded behavior
+quota-exceeded:
+  switch-project: {}
+  switch-preview-model: {}
 
 # Enable Management API for OAuth flows
 remote-management:
@@ -334,7 +383,14 @@ remote-management:
   secret-key: "proxypal-mgmt-key"
   disable-control-panel: true
 "#,
-        config.port
+        config.port,
+        config.debug,
+        config.usage_stats_enabled,
+        config.logging_to_file,
+        config.request_retry,
+        proxy_url_line,
+        config.quota_switch_project,
+        config.quota_switch_preview_model
     );
     
     std::fs::write(&proxy_config_path, proxy_config).map_err(|e| e.to_string())?;
@@ -387,14 +443,14 @@ remote-management:
     // Give it a moment to start
     tokio::time::sleep(tokio::time::Duration::from_millis(500)).await;
     
-    // Enable usage statistics via Management API
+    // Sync usage statistics setting via Management API (in case it differs from config file)
     let port = config.port;
     let enable_url = format!("http://127.0.0.1:{}/v0/management/usage-statistics-enabled", port);
     let client = reqwest::Client::new();
     let _ = client
         .put(&enable_url)
         .header("X-Management-Key", "proxypal-mgmt-key")
-        .json(&serde_json::json!({"value": true}))
+        .json(&serde_json::json!({"value": config.usage_stats_enabled}))
         .send()
         .await;
     

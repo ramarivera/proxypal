@@ -80,6 +80,14 @@ export interface AppConfig {
   port: number;
   autoStart: boolean;
   launchAtLogin: boolean;
+  debug: boolean;
+  proxyUrl: string;
+  requestRetry: number;
+  quotaSwitchProject: boolean;
+  quotaSwitchPreviewModel: boolean;
+  usageStatsEnabled: boolean;
+  requestLogging: boolean;
+  loggingToFile: boolean;
 }
 
 export async function getConfig(): Promise<AppConfig> {

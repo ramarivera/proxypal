@@ -10,7 +10,7 @@ export function SettingsPage() {
 
   const handleConfigChange = async (
     key: keyof ReturnType<typeof config>,
-    value: boolean | number,
+    value: boolean | number | string,
   ) => {
     const newConfig = { ...config(), [key]: value };
     setConfig(newConfig);
@@ -120,7 +120,7 @@ export function SettingsPage() {
               Proxy Configuration
             </h2>
 
-            <div class="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
+            <div class="space-y-4 p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
               <label class="block">
                 <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
                   Port
@@ -142,6 +142,133 @@ export function SettingsPage() {
                   The port where the proxy server will listen (default: 8317)
                 </p>
               </label>
+
+              <div class="border-t border-gray-200 dark:border-gray-700" />
+
+              <label class="block">
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Upstream Proxy URL
+                </span>
+                <input
+                  type="text"
+                  value={config().proxyUrl}
+                  onInput={(e) =>
+                    handleConfigChange("proxyUrl", e.currentTarget.value)
+                  }
+                  placeholder="socks5://127.0.0.1:1080"
+                  class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-smooth"
+                />
+                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  Optional SOCKS5/HTTP proxy for outbound requests (e.g.
+                  socks5://host:port)
+                </p>
+              </label>
+
+              <div class="border-t border-gray-200 dark:border-gray-700" />
+
+              <label class="block">
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Request Retry Count
+                </span>
+                <input
+                  type="number"
+                  value={config().requestRetry}
+                  onInput={(e) =>
+                    handleConfigChange(
+                      "requestRetry",
+                      Math.max(
+                        0,
+                        Math.min(10, parseInt(e.currentTarget.value) || 0),
+                      ),
+                    )
+                  }
+                  class="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-smooth"
+                  min="0"
+                  max="10"
+                />
+                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  Number of retries on 403, 408, 500, 502, 503, 504 errors
+                  (0-10)
+                </p>
+              </label>
+            </div>
+          </div>
+
+          {/* Advanced Settings */}
+          <div class="space-y-4">
+            <h2 class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+              Advanced Settings
+            </h2>
+
+            <div class="space-y-4 p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
+              <Switch
+                label="Debug Mode"
+                description="Enable verbose logging for troubleshooting"
+                checked={config().debug}
+                onChange={(checked) => handleConfigChange("debug", checked)}
+              />
+
+              <div class="border-t border-gray-200 dark:border-gray-700" />
+
+              <Switch
+                label="Usage Statistics"
+                description="Track request counts and token usage"
+                checked={config().usageStatsEnabled}
+                onChange={(checked) =>
+                  handleConfigChange("usageStatsEnabled", checked)
+                }
+              />
+
+              <div class="border-t border-gray-200 dark:border-gray-700" />
+
+              <Switch
+                label="Request Logging"
+                description="Log all API requests for debugging"
+                checked={config().requestLogging}
+                onChange={(checked) =>
+                  handleConfigChange("requestLogging", checked)
+                }
+              />
+
+              <div class="border-t border-gray-200 dark:border-gray-700" />
+
+              <Switch
+                label="Log to File"
+                description="Write logs to rotating files instead of stdout"
+                checked={config().loggingToFile}
+                onChange={(checked) =>
+                  handleConfigChange("loggingToFile", checked)
+                }
+              />
+            </div>
+          </div>
+
+          {/* Quota Exceeded Behavior */}
+          <div class="space-y-4">
+            <h2 class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+              Quota Exceeded Behavior
+            </h2>
+
+            <div class="space-y-4 p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
+              <Switch
+                label="Auto-switch Project"
+                description="Automatically switch to another project when quota is exceeded"
+                checked={config().quotaSwitchProject}
+                onChange={(checked) =>
+                  handleConfigChange("quotaSwitchProject", checked)
+                }
+              />
+
+              <div class="border-t border-gray-200 dark:border-gray-700" />
+
+              <Switch
+                label="Switch to Preview Model"
+                description="Fall back to preview/beta models when quota is exceeded"
+                checked={config().quotaSwitchPreviewModel}
+                onChange={(checked) =>
+                  handleConfigChange("quotaSwitchPreviewModel", checked)
+                }
+              />
             </div>
           </div>
 

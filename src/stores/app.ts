@@ -44,6 +44,14 @@ function createAppStore() {
     port: 8317,
     autoStart: true,
     launchAtLogin: false,
+    debug: false,
+    proxyUrl: "",
+    requestRetry: 0,
+    quotaSwitchProject: false,
+    quotaSwitchPreviewModel: false,
+    usageStatsEnabled: true,
+    requestLogging: false,
+    loggingToFile: false,
   });
 
   // UI state
