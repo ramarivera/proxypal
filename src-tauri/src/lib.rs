@@ -897,58 +897,58 @@ async fn start_proxy(
         entry.push_str("    api-key-entries:\n");
         entry.push_str("      - api-key: \"dummy\"\n");
         entry.push_str("    models:\n");
-        // OpenAI GPT models
-        entry.push_str("      - alias: \"copilot-gpt-4.1\"\n");
+        // OpenAI GPT models - use direct names (no prefix) for CLIProxyAPI compatibility
+        entry.push_str("      - alias: \"gpt-4.1\"\n");
         entry.push_str("        name: \"gpt-4.1\"\n");
-        entry.push_str("      - alias: \"copilot-gpt-5\"\n");
+        entry.push_str("      - alias: \"gpt-5\"\n");
         entry.push_str("        name: \"gpt-5\"\n");
-        entry.push_str("      - alias: \"copilot-gpt-5-mini\"\n");
+        entry.push_str("      - alias: \"gpt-5-mini\"\n");
         entry.push_str("        name: \"gpt-5-mini\"\n");
-        entry.push_str("      - alias: \"copilot-gpt-5-codex\"\n");
+        entry.push_str("      - alias: \"gpt-5-codex\"\n");
         entry.push_str("        name: \"gpt-5-codex\"\n");
-        entry.push_str("      - alias: \"copilot-gpt-5.1\"\n");
+        entry.push_str("      - alias: \"gpt-5.1\"\n");
         entry.push_str("        name: \"gpt-5.1\"\n");
-        entry.push_str("      - alias: \"copilot-gpt-5.1-codex\"\n");
+        entry.push_str("      - alias: \"gpt-5.1-codex\"\n");
         entry.push_str("        name: \"gpt-5.1-codex\"\n");
-        entry.push_str("      - alias: \\\"copilot-gpt-5.1-codex-mini\\\"\\n");
-        entry.push_str("        name: \\\"gpt-5.1-codex-mini\\\"\\n");
-        entry.push_str("      - alias: \\\"copilot-gpt-5.1-codex-max\\\"\\n");
-        entry.push_str("        name: \\\"gpt-5.1-codex-max\\\"\\n");
-        entry.push_str("      - alias: \\\"copilot-gpt-5.2\\\"\\n");
-        entry.push_str("        name: \\\"gpt-5.2\\\"\\n");
+        entry.push_str("      - alias: \"gpt-5.1-codex-mini\"\n");
+        entry.push_str("        name: \"gpt-5.1-codex-mini\"\n");
+        entry.push_str("      - alias: \"gpt-5.1-codex-max\"\n");
+        entry.push_str("        name: \"gpt-5.1-codex-max\"\n");
+        entry.push_str("      - alias: \"gpt-5.2\"\n");
+        entry.push_str("        name: \"gpt-5.2\"\n");
         // Legacy OpenAI models (may still work)
-        entry.push_str("      - alias: \"copilot-gpt-4o\"\n");
+        entry.push_str("      - alias: \"gpt-4o\"\n");
         entry.push_str("        name: \"gpt-4o\"\n");
-        entry.push_str("      - alias: \"copilot-gpt-4\"\n");
+        entry.push_str("      - alias: \"gpt-4\"\n");
         entry.push_str("        name: \"gpt-4\"\n");
-        entry.push_str("      - alias: \"copilot-gpt-4-turbo\"\n");
+        entry.push_str("      - alias: \"gpt-4-turbo\"\n");
         entry.push_str("        name: \"gpt-4-turbo\"\n");
-        entry.push_str("      - alias: \"copilot-o1\"\n");
+        entry.push_str("      - alias: \"o1\"\n");
         entry.push_str("        name: \"o1\"\n");
-        entry.push_str("      - alias: \"copilot-o1-mini\"\n");
+        entry.push_str("      - alias: \"o1-mini\"\n");
         entry.push_str("        name: \"o1-mini\"\n");
         // xAI Grok model
-        entry.push_str("      - alias: \"copilot-grok-code-fast-1\"\n");
+        entry.push_str("      - alias: \"grok-code-fast-1\"\n");
         entry.push_str("        name: \"grok-code-fast-1\"\n");
         // Fine-tuned models
-        entry.push_str("      - alias: \"copilot-raptor-mini\"\n");
+        entry.push_str("      - alias: \"raptor-mini\"\n");
         entry.push_str("        name: \"raptor-mini\"\n");
         // Google Gemini models (via OpenAI-compat)
-        entry.push_str("      - alias: \"copilot-gemini-2.5-pro\"\n");
+        entry.push_str("      - alias: \"gemini-2.5-pro\"\n");
         entry.push_str("        name: \"gemini-2.5-pro\"\n");
-        entry.push_str("      - alias: \"copilot-gemini-3-pro\"\n");
+        entry.push_str("      - alias: \"gemini-3-pro-preview\"\n");
         entry.push_str("        name: \"gemini-3-pro-preview\"\n");
         // Claude models (GA)
-        entry.push_str("      - alias: \"copilot-claude-haiku-4.5\"\n");
+        entry.push_str("      - alias: \"claude-haiku-4.5\"\n");
         entry.push_str("        name: \"claude-haiku-4.5\"\n");
-        entry.push_str("      - alias: \"copilot-claude-opus-4.1\"\n");
+        entry.push_str("      - alias: \"claude-opus-4.1\"\n");
         entry.push_str("        name: \"claude-opus-4.1\"\n");
-        entry.push_str("      - alias: \"copilot-claude-sonnet-4\"\n");
+        entry.push_str("      - alias: \"claude-sonnet-4\"\n");
         entry.push_str("        name: \"claude-sonnet-4\"\n");
-        entry.push_str("      - alias: \"copilot-claude-sonnet-4.5\"\n");
+        entry.push_str("      - alias: \"claude-sonnet-4.5\"\n");
         entry.push_str("        name: \"claude-sonnet-4.5\"\n");
         // Claude models (Preview)
-        entry.push_str("      - alias: \"copilot-claude-opus-4.5\"\n");
+        entry.push_str("      - alias: \"claude-opus-4.5\"\n");
         entry.push_str("        name: \"claude-opus-4.5\"\n");
         openai_compat_entries.push(entry);
     }
@@ -1373,14 +1373,16 @@ async fn start_copilot(
             copilot_bin,
             detection.version.as_ref().map(|v| format!(" v{}", v)).unwrap_or_default());
         (copilot_bin, vec![])
+    } else if let Some(bunx_bin) = detection.bunx_bin.clone() {
+        // Prefer bunx over npx (faster startup)
+        println!("[copilot] Using bunx: {} copilot-api@latest", bunx_bin);
+        (bunx_bin, vec!["copilot-api@latest".to_string()])
     } else {
-        // Use npx to run copilot-api
+        // Fallback to npx
         let npx_bin = detection.npx_bin.clone()
             .ok_or_else(|| format!(
-                "npx binary not found (required to run copilot-api).\n\n\
-                Node path: {}\n\n\
-                Please ensure npm/npx is installed alongside Node.js.",
-                detection.node_bin.as_deref().unwrap_or("not found")
+                "Neither bunx nor npx found (required to run copilot-api).\n\n\
+                Install bun (https://bun.sh) or Node.js (https://nodejs.org/) and restart ProxyPal."
             ))?;
         println!("[copilot] Using npx: {} copilot-api@latest", npx_bin);
         (npx_bin, vec!["copilot-api@latest".to_string()])
@@ -1429,10 +1431,12 @@ async fn start_copilot(
         status.authenticated = false;
     }
     
-    // Listen for stdout/stderr
+    // Listen for stdout/stderr in background task
     let app_handle = app.clone();
     tauri::async_runtime::spawn(async move {
         use tauri_plugin_shell::process::CommandEvent;
+        
+        println!("[copilot] Starting stdout/stderr listener...");
         
         while let Some(event) = rx.recv().await {
             match event {
@@ -1441,24 +1445,40 @@ async fn start_copilot(
                     println!("[copilot-api] {}", text);
                     
                     // Check for successful login message
-                    if text.contains("Logged in as") {
+                    // copilot-api outputs "Listening on: http://localhost:PORT/" when ready
+                    let text_lower = text.to_lowercase();
+                    if text_lower.contains("listening on") || text.contains("Logged in as") || text.contains("Server running") {
                         // Update authenticated status
                         if let Some(state) = app_handle.try_state::<AppState>() {
                             let mut status = state.copilot_status.lock().unwrap();
                             status.authenticated = true;
                             let _ = app_handle.emit("copilot-status-changed", status.clone());
+                            println!("[copilot] ✓ Authenticated via stdout detection");
                         }
                     }
                     
                     // Check for auth URL in output
-                    if text.contains("https://github.com/login/device") {
+                    if text.contains("https://github.com/login/device") || text.contains("device code") {
                         // Emit auth required event
                         let _ = app_handle.emit("copilot-auth-required", text.to_string());
+                        println!("[copilot] Auth required - device code flow initiated");
                     }
                 }
                 CommandEvent::Stderr(line) => {
                     let text = String::from_utf8_lossy(&line);
                     eprintln!("[copilot-api ERROR] {}", text);
+                    
+                    // Some processes log to stderr even for non-errors
+                    // Check if it's actually a login/running message
+                    let text_lower = text.to_lowercase();
+                    if text_lower.contains("listening on") || text.contains("Logged in as") || text.contains("Server running") {
+                        if let Some(state) = app_handle.try_state::<AppState>() {
+                            let mut status = state.copilot_status.lock().unwrap();
+                            status.authenticated = true;
+                            let _ = app_handle.emit("copilot-status-changed", status.clone());
+                            println!("[copilot] ✓ Authenticated via stderr detection");
+                        }
+                    }
                 }
                 CommandEvent::Terminated(payload) => {
                     println!("[copilot-api] Process terminated: {:?}", payload);
@@ -1476,10 +1496,52 @@ async fn start_copilot(
         }
     });
     
-    // Return immediately with "running but not authenticated" status
-    // The UI will receive authentication updates via copilot-status-changed events
-    // This prevents the UI from freezing while waiting for copilot-api to start
+    // Wait for copilot-api to be ready (up to 8 seconds)
+    // bunx/npx may need to download packages on first run, which takes ~5s
+    let client = reqwest::Client::new();
+    let health_url = format!("http://127.0.0.1:{}/v1/models", port);
+    
+    for i in 0..16 {
+        tokio::time::sleep(tokio::time::Duration::from_millis(500)).await;
+        
+        // Check if stdout listener already detected authentication
+        {
+            let status = state.copilot_status.lock().unwrap();
+            if status.authenticated {
+                println!("[copilot] ✓ Ready via stdout detection at {:.1}s", (i + 1) as f32 * 0.5);
+                let status_clone = status.clone();
+                let _ = app.emit("copilot-status-changed", status_clone.clone());
+                return Ok(status_clone);
+            }
+            if !status.running {
+                return Err("Copilot process stopped unexpectedly".to_string());
+            }
+        }
+        
+        // Also check health endpoint
+        if let Ok(response) = client
+            .get(&health_url)
+            .timeout(std::time::Duration::from_secs(1))
+            .send()
+            .await
+        {
+            if response.status().is_success() {
+                println!("[copilot] ✓ Ready via health check at {:.1}s", (i + 1) as f32 * 0.5);
+                let new_status = {
+                    let mut status = state.copilot_status.lock().unwrap();
+                    status.authenticated = true;
+                    status.clone()
+                };
+                let _ = app.emit("copilot-status-changed", new_status.clone());
+                return Ok(new_status);
+            }
+        }
+    }
+    
+    // Return with "running but not authenticated" status after timeout
+    // The background task will continue polling and emit status updates
     let initial_status = state.copilot_status.lock().unwrap().clone();
+    println!("[copilot] Returning after 8s wait: running={}, authenticated={}", initial_status.running, initial_status.authenticated);
     let _ = app.emit("copilot-status-changed", initial_status.clone());
     
     // Spawn background task to poll for authentication
@@ -1619,6 +1681,7 @@ pub struct CopilotApiDetection {
     pub npx_bin: Option<String>,      // Path to npx binary (for fallback)
     pub npm_bin: Option<String>,      // Path to npm binary (for installs)
     pub node_bin: Option<String>,     // Path to node binary actually used
+    pub bunx_bin: Option<String>,     // Path to bunx binary (preferred over npx)
     pub node_available: bool,
     pub checked_node_paths: Vec<String>,
     pub checked_copilot_paths: Vec<String>,
@@ -1738,6 +1801,51 @@ async fn detect_copilot_api(app: tauri::AppHandle) -> Result<CopilotApiDetection
     }
     
     if node_bin.is_none() {
+        // Even without Node, check if bunx is available (bun can run copilot-api)
+        let bunx_paths: Vec<String> = if cfg!(target_os = "macos") {
+            vec![
+                format!("{}/.bun/bin/bunx", home_str),
+                "/opt/homebrew/bin/bunx".to_string(),
+                "/usr/local/bin/bunx".to_string(),
+            ]
+        } else if cfg!(target_os = "windows") {
+            vec![
+                format!("{}/.bun/bin/bunx.exe", home_str),
+                format!("{}/AppData/Local/bun/bunx.exe", home_str),
+            ]
+        } else {
+            vec![
+                format!("{}/.bun/bin/bunx", home_str),
+                "/usr/local/bin/bunx".to_string(),
+            ]
+        };
+        
+        let mut bunx_bin: Option<String> = None;
+        for path in &bunx_paths {
+            let check = app.shell().command(path).args(["--version"]).output().await;
+            if check.as_ref().map(|o| o.status.success()).unwrap_or(false) {
+                bunx_bin = Some(path.clone());
+                println!("[copilot] Found bunx at: {} (no Node.js needed)", path);
+                break;
+            }
+        }
+        
+        if bunx_bin.is_some() {
+            // Bun available, can still run copilot-api via bunx
+            return Ok(CopilotApiDetection {
+                installed: false,
+                version: None,
+                copilot_bin: None,
+                npx_bin: None,
+                npm_bin: None,
+                node_bin: None,
+                bunx_bin,
+                node_available: true, // Mark as available since bunx works
+                checked_node_paths: node_paths,
+                checked_copilot_paths: vec![],
+            });
+        }
+        
         return Ok(CopilotApiDetection {
             installed: false,
             version: None,
@@ -1745,6 +1853,7 @@ async fn detect_copilot_api(app: tauri::AppHandle) -> Result<CopilotApiDetection
             npx_bin: None,
             npm_bin: None,
             node_bin: None,
+            bunx_bin: None,
             node_available: false,
             checked_node_paths: node_paths,
             checked_copilot_paths: vec![],
@@ -1786,6 +1895,35 @@ async fn detect_copilot_api(app: tauri::AppHandle) -> Result<CopilotApiDetection
             n.replace("/node", "/npm")
         }
     }).unwrap_or_else(|| if cfg!(target_os = "windows") { "npm.cmd".to_string() } else { "npm".to_string() });
+    
+    // Check for bun/bunx (preferred over npx - faster startup)
+    let bunx_paths: Vec<String> = if cfg!(target_os = "macos") {
+        vec![
+            format!("{}/.bun/bin/bunx", home_str),
+            "/opt/homebrew/bin/bunx".to_string(),
+            "/usr/local/bin/bunx".to_string(),
+        ]
+    } else if cfg!(target_os = "windows") {
+        vec![
+            format!("{}/.bun/bin/bunx.exe", home_str),
+            format!("{}/AppData/Local/bun/bunx.exe", home_str),
+        ]
+    } else {
+        vec![
+            format!("{}/.bun/bin/bunx", home_str),
+            "/usr/local/bin/bunx".to_string(),
+        ]
+    };
+    
+    let mut bunx_bin: Option<String> = None;
+    for path in &bunx_paths {
+        let check = app.shell().command(path).args(["--version"]).output().await;
+        if check.as_ref().map(|o| o.status.success()).unwrap_or(false) {
+            bunx_bin = Some(path.clone());
+            println!("[copilot] Found bunx at: {}", path);
+            break;
+        }
+    }
     
     // Try to find copilot-api binary directly first
     let copilot_paths: Vec<String> = if cfg!(target_os = "macos") {
@@ -1838,6 +1976,7 @@ async fn detect_copilot_api(app: tauri::AppHandle) -> Result<CopilotApiDetection
                 npx_bin: Some(npx_bin),
                 npm_bin: Some(npm_bin),
                 node_bin: node_bin.clone(),
+                bunx_bin,
                 node_available: true,
                 checked_node_paths: node_paths,
                 checked_copilot_paths: copilot_paths,
@@ -1875,6 +2014,7 @@ async fn detect_copilot_api(app: tauri::AppHandle) -> Result<CopilotApiDetection
                             npx_bin: Some(npx_bin),
                             npm_bin: Some(npm_bin),
                             node_bin: node_bin.clone(),
+                            bunx_bin,
                             node_available: true,
                             checked_node_paths: node_paths,
                             checked_copilot_paths: copilot_paths,
@@ -1893,6 +2033,7 @@ async fn detect_copilot_api(app: tauri::AppHandle) -> Result<CopilotApiDetection
         npx_bin: Some(npx_bin),
         npm_bin: Some(npm_bin),
         node_bin: node_bin.clone(),
+        bunx_bin,
         node_available: true,
         checked_node_paths: node_paths,
         checked_copilot_paths: copilot_paths,
@@ -3442,6 +3583,7 @@ fn get_model_display_name(model_id: &str, owned_by: &str) -> String {
     
     // Add provider prefix for clarity
     match owned_by {
+        "copilot" => format!("Copilot {}", base_name),
         "anthropic" => format!("{}", base_name),
         "google" => format!("{}", base_name),
         "openai" => format!("{}", base_name),
